@@ -1,0 +1,25 @@
+version: '2'
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 'postgres:latest'
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "Welcome123!"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - 15432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      postgres_network:
+        aliases:
+          - postgres_host
+volumes:
+  pgdata: {}
+networks:
+  postgres_network:
+    name: postgres_net
+    driver: bridge
