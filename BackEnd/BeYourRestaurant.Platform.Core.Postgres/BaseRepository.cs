@@ -1,51 +1,67 @@
 ﻿using BeYourRestaurant.Platform.Core.Domain;
+using BeYourRestaurant.Platform.Core.Postgres.Helpers;
 using BeYourRestaurant.Platform.Core.Repository;
-using Microsoft.Extensions.Configuration;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BeYourRestaurant.Platform.Core.Postgres.Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        protected IDbConnection _connection;
+        public abstract string _tableEntityName { get; set; }
+        private readonly IDapperDbContext _context;
 
-        protected BaseRepository(IDbConnection dbConnection)
+        protected BaseRepository(IDapperDbContext databaseContext)
         {
-            _connection = dbConnection;
+            _context = databaseContext;
         }
 
         /// <inheritdoc/>
-        public Task<List<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var query = string.Format("SELECT * FROM {0}", _tableEntityName);
+
+            return await _context.Connection.QueryAsync<T>(query);
         }
 
         /// <inheritdoc/>
-        public Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int entityId)
         {
-            throw new NotImplementedException();
+            var query = string.Format("SELECT * FROM {0} WHERE Id = {1}", _tableEntityName, entityId);
+
+            return await _context.Connection.QuerySingleAsync<T>(query);
         }
 
         /// <inheritdoc/>
-        public Task<int> CreateAsync(T entity)
+        public async Task<int> InsertAsync(T entity)
         {
-            throw new NotImplementedException();
+            entity.CreateDate = DateTime.UtcNow;
+            //TODO: Change for a method that returns the dictionary of parameters so I can run a store procedure instead of this
+            var insertQuery = QueryHelper<T>.GenerateInsertQuery(_tableEntityName);
+
+            return await _context.Connection.ExecuteAsync(insertQuery, entity);
         }
 
         /// <inheritdoc/>
-        public Task<int> DeleteAsync(T entity)
+        public async Task<int> DeleteAsync(int entityId)
         {
-            throw new NotImplementedException();
+            var query = string.Format("DELETE FROM {0} WHERE Id = @Id", _tableEntityName);
+
+            return await _context.Connection.ExecuteAsync(query, entityId);
         }
 
         /// <inheritdoc/>
-        public Task<int> UpdateAsync(T entity)
+        public async Task<int> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            entity.ModifiedDate = DateTime.UtcNow;
+            //TODO: Change for a method that returns the dictionary of parameters so I can run a store procedure instead of this
+            var updateQuery = QueryHelper<T>.GenerateUpdateQuery(_tableEntityName);
+
+            return await _context.Connection.ExecuteAsync(updateQuery, entity);
         }
     }
 }

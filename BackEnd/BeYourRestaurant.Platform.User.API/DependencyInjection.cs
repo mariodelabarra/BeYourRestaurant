@@ -1,4 +1,5 @@
-﻿using BeYourRestaurant.Platform.Core.Postgres.Repository;
+﻿using BeYourRestaurant.Platform.Core.Postgres;
+using BeYourRestaurant.Platform.Core.Postgres.Repository;
 using BeYourRestaurant.Platform.Core.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ namespace BeYourRestaurant.Platform.User.API
         public static void RegisterConfigutarion(IServiceCollection services, IConfiguration configuration)
         {
             //Connection to Postgres
-            services.AddTransient<IDbConnection>( (sp) => new SqlConnection("DefaultConnection"));
+            services.AddSingleton<DapperDbContext>();
         }
 
         public static void RegisterServices(IServiceCollection services)

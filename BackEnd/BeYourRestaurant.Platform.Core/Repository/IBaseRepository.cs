@@ -14,21 +14,21 @@ namespace BeYourRestaurant.Platform.Core.Repository
         /// Gets all the data from the specified entity
         /// </summary>
         /// <returns>List of entity</returns>
-        Task<List<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync();
 
         /// <summary>
         /// Get the first match with the specified Id
         /// </summary>
         /// <param name="id">Id of the entity</param>
         /// <returns>Matched entity</returns>
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(int entityId);
 
         /// <summary>
         /// Creates a new entity with the provide data
         /// </summary>
         /// <param name="entity">Entity to create</param>
         /// <returns>Id of the created entity</returns>
-        Task<int> CreateAsync(T entity);
+        Task<int> InsertAsync(T entity);
 
         /// <summary>
         /// Find the entity with the Id and try to update him
@@ -40,8 +40,8 @@ namespace BeYourRestaurant.Platform.Core.Repository
         /// <summary>
         /// Deletes the entity with the specified Id
         /// </summary>
-        /// <param name="entity">Entity to delete</param>
+        /// <param name="entityId">Id of entity</param>
         /// <returns>Id of the deleted entity</returns>
-        Task<int> DeleteAsync(T entity);
+        Task<int> DeleteAsync(int entityId);
     }
 }
