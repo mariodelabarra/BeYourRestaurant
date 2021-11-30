@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Npgsql;
-using System;
+﻿using System;
 using System.Data;
 
 namespace BeYourRestaurant.Platform.Core.Postgres

@@ -9,6 +9,6 @@ namespace BeYourRestaurant.Platform.Core.Domain
     {
         public int Id { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
     }
 }

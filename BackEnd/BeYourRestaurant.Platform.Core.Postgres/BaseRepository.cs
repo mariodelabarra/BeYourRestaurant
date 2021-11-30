@@ -4,15 +4,13 @@ using BeYourRestaurant.Platform.Core.Repository;
 using Dapper;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BeYourRestaurant.Platform.Core.Postgres.Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        public abstract string _tableEntityName { get; set; }
+        public abstract string _tableEntityName { get; }
         private readonly IDapperDbContext _context;
 
         protected BaseRepository(IDapperDbContext databaseContext)
@@ -57,7 +55,7 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Repository
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(T entity)
         {
-            entity.ModifiedDate = DateTime.UtcNow;
+            entity.LastModifiedDate = DateTime.UtcNow;
             //TODO: Change for a method that returns the dictionary of parameters so I can run a store procedure instead of this
             var updateQuery = QueryHelper<T>.GenerateUpdateQuery(_tableEntityName);
 

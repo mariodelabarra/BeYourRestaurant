@@ -1,11 +1,9 @@
 ﻿using BeYourRestaurant.Platform.Core.Domain;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BeYourRestaurant.Platform.Core.Postgres.Helpers
 {
@@ -21,6 +19,11 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Helpers
                     select prop.Name).ToList();
         }
 
+        /// <summary>
+        /// Generates the Insert query for all the properties of the specified entity
+        /// </summary>
+        /// <param name="tableName">Name of the table entity</param>
+        /// <returns>Insert query for all properties of the entity</returns>
         public static string GenerateInsertQuery(string tableName)
         {
             var insertQuery = new StringBuilder($"INSERT INTO {tableName} ");
@@ -46,6 +49,11 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Helpers
             return insertQuery.ToString();
         }
 
+        /// <summary>
+        /// Generates the Update query for all the properties of the specified entity
+        /// </summary>
+        /// <param name="tableName">Name of the table entity</param>
+        /// <returns>Update query for all properties of the entity</returns>
         public static string GenerateUpdateQuery(string tableName)
         {
             var updateQuery = new StringBuilder($"UPDATE {tableName} SET ");
