@@ -10,12 +10,12 @@ namespace BeYourRestaurant.Platform.User.Repository
 
     public class UserRepository : BaseRepository<Domain.User>, IUserRepository
     {
-        public override string _tableEntityName => "User";
-        private readonly IDapperDbContext _context;
+        public const string _tableName = "User";
+        private readonly PostgressDbSession _session;
 
-        public UserRepository(IDapperDbContext databaseContext) : base(databaseContext)
+        public UserRepository(PostgressDbSession session) : base(session, _tableName)
         {
-            _context = databaseContext;
+            _session = session;
         }
     }
 }

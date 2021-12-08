@@ -10,7 +10,7 @@ namespace BeYourRestaurant.Platform.User.Service
 {
     public interface IUserService
     {
-
+        Task<Domain.User> GetById(int userId);
         Task<int> InsertAsync(Domain.User user);
     }
 
@@ -21,6 +21,13 @@ namespace BeYourRestaurant.Platform.User.Service
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+        }
+
+        public async Task<Domain.User> GetById(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+
+            return user;
         }
 
         public async Task<int> InsertAsync(Domain.User user)

@@ -12,6 +12,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BeYourRestaurant.Platform.Core.Postgres\BeYourRestaurant.Platform.Core.Postgres.csproj" />
     <ProjectReference Include="..\BeYourRestaurant.Platform.Core\BeYourRestaurant.Platform.Core.csproj" />
+    <ProjectReference Include="..\BeYourRestaurant.Platform.User.Repository\BeYourRestaurant.Platform.User.Repository.csproj" />
+    <ProjectReference Include="..\BeYourRestaurant.Platform.User.Service\BeYourRestaurant.Platform.User.Service.csproj" />
   </ItemGroup>
 
 </Project>

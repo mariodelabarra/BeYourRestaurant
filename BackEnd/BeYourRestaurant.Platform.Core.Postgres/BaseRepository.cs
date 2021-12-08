@@ -8,30 +8,31 @@ using System.Threading.Tasks;
 
 namespace BeYourRestaurant.Platform.Core.Postgres.Repository
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        public abstract string _tableEntityName { get; }
-        private readonly IDapperDbContext _context;
+        private readonly string _tableEntityName;
+        private readonly PostgressDbSession _session;
 
-        protected BaseRepository(IDapperDbContext databaseContext)
+        protected BaseRepository(PostgressDbSession session, string tableEntityName)
         {
-            _context = databaseContext;
+            _session = session;
+            _tableEntityName = string.Format(@"""{0}""", tableEntityName);
         }
 
         /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var query = string.Format("SELECT * FROM {0}", _tableEntityName);
+            var query = string.Format(@"SELECT * FROM ""{0}""", _tableEntityName);
 
-            return await _context.Connection.QueryAsync<T>(query);
+            return await _session.Connection.QueryAsync<T>(query, null, _session.Transaction);
         }
 
         /// <inheritdoc/>
         public async Task<T> GetByIdAsync(int entityId)
         {
-            var query = string.Format("SELECT * FROM {0} WHERE Id = {1}", _tableEntityName, entityId);
+            var query = string.Format(@"SELECT * FROM {0} WHERE ""Id"" = {1}", _tableEntityName, entityId);
 
-            return await _context.Connection.QuerySingleAsync<T>(query);
+            return await _session.Connection.QuerySingleAsync<T>(query, null, _session.Transaction);
         }
 
         /// <inheritdoc/>
@@ -41,15 +42,15 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Repository
             //TODO: Change for a method that returns the dictionary of parameters so I can run a store procedure instead of this
             var insertQuery = QueryHelper<T>.GenerateInsertQuery(_tableEntityName);
 
-            return await _context.Connection.ExecuteAsync(insertQuery, entity);
+            return await _session.Connection.ExecuteAsync(insertQuery, entity, _session.Transaction);
         }
 
         /// <inheritdoc/>
         public async Task<int> DeleteAsync(int entityId)
         {
-            var query = string.Format("DELETE FROM {0} WHERE Id = @Id", _tableEntityName);
+            var query = string.Format(@"DELETE FROM {0} WHERE ""Id"" = @Id", _tableEntityName);
 
-            return await _context.Connection.ExecuteAsync(query, entityId);
+            return await _session.Connection.ExecuteAsync(query, entityId, _session.Transaction);
         }
 
         /// <inheritdoc/>
@@ -59,7 +60,7 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Repository
             //TODO: Change for a method that returns the dictionary of parameters so I can run a store procedure instead of this
             var updateQuery = QueryHelper<T>.GenerateUpdateQuery(_tableEntityName);
 
-            return await _context.Connection.ExecuteAsync(updateQuery, entity);
+            return await _session.Connection.ExecuteAsync(updateQuery, entity, _session.Transaction);
         }
     }
 }
