@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeYourRestaurant.Platform.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeYourRestaurant.Platform.Identity.Domain", "BeYourRestaurant.Platform.Identity.Domain\BeYourRestaurant.Platform.Identity.Domain.csproj", "{C4F4F611-B297-4413-AB33-92CC7B8D27AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeYourRestaurant.Platform.User.Service", "BeYourRestaurant.Platform.User.Service\BeYourRestaurant.Platform.User.Service.csproj", "{D4CCBFEE-B7C3-4D09-B5CD-AB9A32C28C01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeYourRestaurant.Platform.User.Service", "BeYourRestaurant.Platform.User.Service\BeYourRestaurant.Platform.User.Service.csproj", "{D4CCBFEE-B7C3-4D09-B5CD-AB9A32C28C01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeYourRestaurant.Platform.Core.API", "BeYourRestaurant.Platform.Core.API\BeYourRestaurant.Platform.Core.API.csproj", "{EBD76DE4-0DC0-494C-9BBA-59E12F747A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{D4CCBFEE-B7C3-4D09-B5CD-AB9A32C28C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4CCBFEE-B7C3-4D09-B5CD-AB9A32C28C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4CCBFEE-B7C3-4D09-B5CD-AB9A32C28C01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD76DE4-0DC0-494C-9BBA-59E12F747A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD76DE4-0DC0-494C-9BBA-59E12F747A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD76DE4-0DC0-494C-9BBA-59E12F747A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD76DE4-0DC0-494C-9BBA-59E12F747A54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{2B44044A-4958-47D3-8C6E-FAF6CDEAC397} = {1471A181-83B1-47C2-93D0-55A8BF9F28C4}
 		{C4F4F611-B297-4413-AB33-92CC7B8D27AD} = {1471A181-83B1-47C2-93D0-55A8BF9F28C4}
 		{D4CCBFEE-B7C3-4D09-B5CD-AB9A32C28C01} = {55D95BEE-EC67-4847-A4CD-50E6483B63F1}
+		{EBD76DE4-0DC0-494C-9BBA-59E12F747A54} = {362D79E4-9653-4A49-AC05-21D74A824A83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB3F13CF-2BD7-481E-A74D-173F5FC44A1D}

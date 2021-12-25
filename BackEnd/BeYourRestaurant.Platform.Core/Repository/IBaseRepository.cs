@@ -14,14 +14,14 @@ namespace BeYourRestaurant.Platform.Core.Repository
         /// Gets all the data from the specified entity
         /// </summary>
         /// <returns>List of entity</returns>
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> ReadAllAsync();
 
         /// <summary>
         /// Get the first match with the specified Id
         /// </summary>
         /// <param name="id">Id of the entity</param>
         /// <returns>Matched entity</returns>
-        Task<T> GetByIdAsync(int entityId);
+        Task<T> ReadByIdAsync(int entityId);
 
         /// <summary>
         /// Creates a new entity with the provide data

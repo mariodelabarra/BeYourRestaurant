@@ -1,9 +1,5 @@
 ﻿using BeYourRestaurant.Platform.User.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BeYourRestaurant.Platform.User.API.Controllers
@@ -22,7 +18,7 @@ namespace BeYourRestaurant.Platform.User.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int userId)
         {
-            var user = await _userService.GetById(userId);
+            var user = await _userService.ReadById(userId);
 
             return Ok(user);
         }

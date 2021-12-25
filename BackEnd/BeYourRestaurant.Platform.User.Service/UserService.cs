@@ -1,31 +1,27 @@
 ﻿using BeYourRestaurant.Platform.User.Domain;
 using BeYourRestaurant.Platform.User.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeYourRestaurant.Platform.User.Service
 {
     public interface IUserService
     {
-        Task<Domain.User> GetById(int userId);
+        Task<Domain.User> ReadById(int userId);
         Task<int> InsertAsync(Domain.User user);
     }
 
     public class UserService : IUserService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public async Task<Domain.User> GetById(int userId)
+        public async Task<Domain.User> ReadById(int userId)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _userRepository.ReadByIdAsync(userId);
 
             return user;
         }

@@ -1,17 +1,15 @@
+using BeYourRestaurant.Platform.Core.API;
+using BeYourRestaurant.Platform.Core.API.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NLog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace BeYourRestaurant.Platform.User.API
 {
@@ -19,6 +17,7 @@ namespace BeYourRestaurant.Platform.User.API
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -40,7 +39,7 @@ namespace BeYourRestaurant.Platform.User.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +47,8 @@ namespace BeYourRestaurant.Platform.User.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BeYourRestaurant.Platform.User.API v1"));
             }
+
+            app.ConfigureExceptionHandler(logger);
 
             app.UseHttpsRedirection();
 

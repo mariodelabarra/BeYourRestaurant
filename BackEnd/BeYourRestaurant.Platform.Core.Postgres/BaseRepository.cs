@@ -20,7 +20,7 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Repository
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> ReadAllAsync()
         {
             var query = string.Format(@"SELECT * FROM ""{0}""", _tableEntityName);
 
@@ -28,7 +28,7 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Repository
         }
 
         /// <inheritdoc/>
-        public async Task<T> GetByIdAsync(int entityId)
+        public async Task<T> ReadByIdAsync(int entityId)
         {
             var query = string.Format(@"SELECT * FROM {0} WHERE ""Id"" = {1}", _tableEntityName, entityId);
 

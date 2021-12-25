@@ -1,4 +1,5 @@
-﻿using BeYourRestaurant.Platform.Core.Postgres;
+﻿using BeYourRestaurant.Platform.Core.API;
+using BeYourRestaurant.Platform.Core.Postgres;
 using BeYourRestaurant.Platform.Core.Postgres.Repository;
 using BeYourRestaurant.Platform.Core.Repository;
 using BeYourRestaurant.Platform.User.Repository;
@@ -19,12 +20,12 @@ namespace BeYourRestaurant.Platform.User.API
 
         public static void RegisterConfigutarion(IServiceCollection services, IConfiguration configuration)
         {
-            //Connection to Postgres
-            //services.AddSingleton(x => new PostgresSession(configuration.GetConnectionString("DefaultConnection")));
-            //services.AddSingleton<IDapperDbContext, DapperDbContext>();
-
+            //Connection to PostgresSQL
             services.AddScoped(x => new PostgressDbSession(configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            //LoggerManager
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
 
         public static void RegisterServices(IServiceCollection services)
@@ -44,7 +45,6 @@ namespace BeYourRestaurant.Platform.User.API
 
             //Repositories
             services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddTransient<NotificationRepository>();
         }
     }
 }

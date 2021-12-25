@@ -16,4 +16,8 @@
     <ProjectReference Include="..\BeYourRestaurant.Platform.User.Service\BeYourRestaurant.Platform.User.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
