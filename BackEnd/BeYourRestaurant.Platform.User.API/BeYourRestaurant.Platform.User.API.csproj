@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\BeYourRestaurant.Platform.Core.API\BeYourRestaurant.Platform.Core.API.csproj" />
     <ProjectReference Include="..\BeYourRestaurant.Platform.Core.Postgres\BeYourRestaurant.Platform.Core.Postgres.csproj" />
     <ProjectReference Include="..\BeYourRestaurant.Platform.Core\BeYourRestaurant.Platform.Core.csproj" />
     <ProjectReference Include="..\BeYourRestaurant.Platform.User.Repository\BeYourRestaurant.Platform.User.Repository.csproj" />

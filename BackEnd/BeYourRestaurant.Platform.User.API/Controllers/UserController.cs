@@ -24,7 +24,7 @@ namespace BeYourRestaurant.Platform.User.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Domain.User user)
+        public async Task<IActionResult> Create([FromBody] Domain.User user)
         {
             var id = await _userService.InsertAsync(user);
 
