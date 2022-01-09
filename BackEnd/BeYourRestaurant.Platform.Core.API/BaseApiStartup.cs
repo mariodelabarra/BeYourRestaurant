@@ -4,6 +4,7 @@ using Hellang.Middleware.ProblemDetails;
 using Hellang.Middleware.ProblemDetails.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,14 +19,16 @@ namespace BeYourRestaurant.Platform.Core.API
     public abstract class BaseApiStartup
     {
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; set; }
         private List<Type> AssemblyTypes { get; }
 
-        public BaseApiStartup(IConfiguration configuration)
+        public BaseApiStartup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
             AssemblyTypes = new List<Type>();
             LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
-            RegisterValidatorFromAssemblyContaining<BaseApiStartup>();
+            RegisterValidatorFromAssemblyContaining<ErrorDetails>();
         }
 
         /// <summary>
@@ -38,6 +41,8 @@ namespace BeYourRestaurant.Platform.Core.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddProblemDetails(ConfigureProblemDetails);
+
             services
                 .AddControllers()
                 .AddFluentValidation(fv => 
@@ -51,8 +56,6 @@ namespace BeYourRestaurant.Platform.Core.API
                 {
                     opts.JsonSerializerOptions.AddDefaultOptions();
                 });
-
-            services.AddProblemDetails();
 
             ConfigureCorsPolicy(services);
             AddValidatorDependencies(services);
@@ -72,7 +75,6 @@ namespace BeYourRestaurant.Platform.Core.API
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BeYourRestaurant.Platform.User.API v1"));
             }
@@ -85,8 +87,6 @@ namespace BeYourRestaurant.Platform.Core.API
             }
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 
@@ -131,6 +131,14 @@ namespace BeYourRestaurant.Platform.Core.API
             {
                 services.AddValidatorsFromAssemblyContaining(type);
             }
+        }
+
+        protected virtual void ConfigureProblemDetails(ProblemDetailsOptions options)
+        {
+            // Exception details only for development an environment
+            options.IncludeExceptionDetails = (ctx, ex) => WebHostEnvironment.IsDevelopment();
+
+            options.MapException<Exception>(StatusCodes.Status500InternalServerError);
         }
     }
 }

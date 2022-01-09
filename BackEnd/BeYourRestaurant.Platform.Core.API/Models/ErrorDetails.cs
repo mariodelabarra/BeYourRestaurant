@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace BeYourRestaurant.Platform.Core.API.Middleware
+namespace BeYourRestaurant.Platform.Core.API
 {
     public class ErrorDetails
     {
