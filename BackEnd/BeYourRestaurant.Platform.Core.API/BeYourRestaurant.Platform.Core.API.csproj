@@ -15,4 +15,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BeYourRestaurant.Platform.Core\BeYourRestaurant.Platform.Core.csproj" />
+  </ItemGroup>
+
 </Project>
