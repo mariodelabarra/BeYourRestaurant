@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using BeYourRestaurant.Platform.Core.Exceptions;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hellang.Middleware.ProblemDetails;
 using Hellang.Middleware.ProblemDetails.Mvc;
@@ -137,6 +138,8 @@ namespace BeYourRestaurant.Platform.Core.API
         {
             // Exception details only for development an environment
             options.IncludeExceptionDetails = (ctx, ex) => WebHostEnvironment.IsDevelopment();
+
+            options.MapException<NotFoundException>(StatusCodes.Status404NotFound);
 
             options.MapException<Exception>(StatusCodes.Status500InternalServerError);
         }

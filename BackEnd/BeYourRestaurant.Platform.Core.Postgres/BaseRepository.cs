@@ -32,7 +32,7 @@ namespace BeYourRestaurant.Platform.Core.Postgres.Repository
         {
             var query = string.Format(@"SELECT * FROM {0} WHERE ""Id"" = {1}", _tableEntityName, entityId);
 
-            return await _session.Connection.QuerySingleAsync<T>(query, null, _session.Transaction);
+            return await _session.Connection.QuerySingleOrDefaultAsync<T>(query, null, _session.Transaction);
         }
 
         /// <inheritdoc/>
